@@ -1,5 +1,6 @@
-CREATE OR REPLACE PACKAGE BODY COM_FOS_INTERACTIVE_GRID_PROCESS_ROWS
-IS
+create or replace package body com_fos_interactive_grid_process_rows
+as
+
 c_plugin_name        constant varchar2(100) := 'FOS - Interactive Grid - Process Rows';
 c_pk_collection_name constant varchar2(100) := 'FOS_IG_PK';
 
@@ -287,7 +288,8 @@ exception
         apex_exec.close(l_context);
         raise;
 end;
-END COM_FOS_INTERACTIVE_GRID_PROCESS_ROWS;
+
+end;
 /
 
 

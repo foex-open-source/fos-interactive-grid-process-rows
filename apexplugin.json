@@ -2,6 +2,13 @@
     "name":"FOS - Interactive Grid - Process Rows"
    ,"version":"20.1.0"
    ,"description":"\u003Cp\u003EThis plug-in executes PL\/SQL code for each selected or filtered Interactive Grid row.\u003C\/p\u003E"
+   ,"keywords":[
+        "interactive grid"
+       ,"process"
+       ,"rows"
+       ,"selection"
+       ,"filter"
+    ]
    ,"license":"MIT"
    ,"homepage":"https:\/\/foex.at\/fos"
    ,"author":{
@@ -12,7 +19,7 @@
     }
    ,"repository":{
         "type":"git"
-       ,"url":"https:\/\/github.com\/foex-open-source\/.git"
+       ,"url":"https:\/\/github.com\/foex-open-source\/fos-interactive-grid-process-rows.git"
     }
    ,"oracle":{
         "versions":[
@@ -30,7 +37,7 @@
            ,"plugin":{
                 "internalName":"COM.FOS.INTERACTIVE_GRID_PROCESS_ROWS"
                ,"type":"dynamic action"
-               ,"demo":"https:\/\/fos.world\/ords\/f?p=1000:"
+               ,"demo":"https:\/\/fos.world\/ords\/f?p=1000:2020"
                ,"previewImage":"https:\/\/fos.world\/ords\/fos_master_ws\/fos-image\/COM.FOS.INTERACTIVE_GRID_PROCESS_ROWS"
             }
         }
