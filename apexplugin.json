@@ -1,7 +1,9 @@
+
+
 {
     "name":"FOS - Interactive Grid - Process Rows"
    ,"version":"20.1.0"
-   ,"description":"\u003Cp\u003EThis plug-in executes PL\/SQL code for each selected or filtered Interactive Grid row.\u003C\/p\u003E"
+   ,"description":"Process the selected or filtered Interactive Grid rows declaratively.\r\n\u003Ch4\u003EFree Plug-in under MIT License\u003C\/h4\u003E\r\n\u003Cp\u003E\r\nAll FOS plug-ins are released under MIT License, which essentially means it is free for everyone to use, no matter if commercial or private use. \r\n\u003C\/p\u003E\r\n\u003Ch4\u003EOverview\u003C\/h4\u003E\r\n\u003Cp\u003E\n    The \u003Cstrong\u003EFOS - Interactive Grid - Process Rows\u003C\/strong\u003E plug-in is used for bulk-processing rows of an interactive grid. It is a dynamic action that runs PL\/SQL code on either only the selected rows or all filtered rows.\n\u003C\/p\u003E\n\u003Cp\u003E\n    You can pass page-items in and out of the PL\/SQL code, display success and error messages, programmatically control success and error message content and behaviour, declaratively refresh the selected rows or the whole grid after completion, and it also takes care of message substitutions and escaping.\n\u003C\/p\u003E\n"
    ,"keywords":[
         "interactive grid"
        ,"process"
@@ -10,7 +12,12 @@
        ,"filter"
     ]
    ,"license":"MIT"
-   ,"homepage":"https:\/\/foex.at\/fos"
+   ,"commercial":"Yes"
+   ,"homepage":"https:\/\/foex.at\/fos\/"
+   ,"bugs":{
+        "url":"https:\/\/github.com\/foex-open-source\/fos-interactive-grid-process-rows\/issues"
+       ,"email":"support@fos.world"
+    }
    ,"author":{
         "name":"FOEX GmbH"
        ,"email":"office@fos.world"
@@ -23,8 +30,7 @@
     }
    ,"oracle":{
         "versions":[
-            "11.2.0.4"
-           ,"12.1.0.1"
+            "12.1.0.1"
            ,"12.2.0.1"
            ,"18.0.0.0"
            ,"19.0.0.0"
@@ -37,11 +43,13 @@
            ,"plugin":{
                 "internalName":"COM.FOS.INTERACTIVE_GRID_PROCESS_ROWS"
                ,"type":"dynamic action"
-               ,"demo":"https:\/\/fos.world\/ords\/f?p=1000:2020"
+               ,"demo":"https:\/\/fos.world\/ords\/f?p=10000:2020"
                ,"previewImage":"https:\/\/fos.world\/ords\/fos_master_ws\/fos-image\/COM.FOS.INTERACTIVE_GRID_PROCESS_ROWS"
             }
         }
     }
 }
+
+
 
 
