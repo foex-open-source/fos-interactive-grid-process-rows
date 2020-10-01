@@ -17,7 +17,6 @@ All FOS plug-ins are released under MIT License, which essentially means it is f
     You can pass page-items in and out of the PL/SQL code, display success and error messages, programmatically control success and error message content and behaviour, declaratively refresh the selected rows or the whole grid after completion, and it also takes care of message substitutions and escaping.
 </p>
 
-
 ## License
 
 MIT
