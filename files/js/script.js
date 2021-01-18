@@ -1,5 +1,3 @@
-
-
 /* globals apex */
 
 var FOS = window.FOS || {};
@@ -173,7 +171,5 @@ FOS.interactiveGrid.processRows = function (daContext, config, initFn) {
         apex.da.handleAjaxErrors(jqXHR, textStatus, errorThrown, daContext.resumeCallback);
     });
 };
-
-
 
 

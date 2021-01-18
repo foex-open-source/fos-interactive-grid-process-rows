@@ -1,5 +1,3 @@
-
-
 create or replace package com_fos_interactive_grid_process_rows
 as
 
@@ -17,7 +15,5 @@ as
 
 end;
 /
-
-
 
 

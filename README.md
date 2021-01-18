@@ -1,8 +1,6 @@
-
-
 ## FOS - Interactive Grid - Process Rows
 
-![](https://img.shields.io/badge/Plug--in_Type-Dynamic_Action-orange.svg) ![](https://img.shields.io/badge/APEX-19.2-success.svg) ![](https://img.shields.io/badge/APEX-20.1-success.svg)
+![](https://img.shields.io/badge/Plug--in_Type-Dynamic_Action-orange.svg) ![](https://img.shields.io/badge/APEX-19.2-success.svg) ![](https://img.shields.io/badge/APEX-20.1-success.svg) ![](https://img.shields.io/badge/APEX-20.2-success.svg)
 
 Process the selected or filtered Interactive Grid rows declaratively.
 <h4>Free Plug-in under MIT License</h4>
@@ -20,6 +18,4 @@ All FOS plug-ins are released under MIT License, which essentially means it is f
 ## License
 
 MIT
-
-
 

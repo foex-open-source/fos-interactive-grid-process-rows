@@ -1,5 +1,3 @@
-
-
 create or replace package body com_fos_interactive_grid_process_rows
 as
 
@@ -426,7 +424,5 @@ end ajax;
 
 end;
 /
-
-
 
 
