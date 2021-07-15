@@ -222,6 +222,38 @@ as
         return case when p_escape_already_enabled then p_html else apex_escape.html(p_html) end;
     end escape_html;
 
+    --------------------------------------------------------------------------------
+    -- dumps ajax parameters to debug output
+    --------------------------------------------------------------------------------
+    procedure log_ajax_parameters
+    is
+    begin
+        if apex_application.g_debug
+        then
+            apex_debug.message('---------------');
+            apex_debug.message('AJAX Parameters');
+            apex_debug.message('---------------');
+            apex_debug.message('p_widget_name: %s',apex_application.g_widget_name);
+            apex_debug.message('p_widget_action: %s',apex_application.g_widget_action);
+            apex_debug.message('p_widget_action_mod: %s',apex_application.g_widget_action_mod);
+            apex_debug.message('p_request: %s',apex_application.g_request);
+            apex_debug.message('x01: %s',apex_application.g_x01);
+            --apex_debug.message('x02: %s',apex_application.g_x02);
+            --apex_debug.message('x03: %s',apex_application.g_x03);
+            --apex_debug.message('x04: %s',apex_application.g_x04);
+            --apex_debug.message('x05: %s',apex_application.g_x05);
+            --apex_debug.message('x06: %s',apex_application.g_x06);
+            --apex_debug.message('x07: %s',apex_application.g_x07);
+            --apex_debug.message('x08: %s',apex_application.g_x08);
+            --apex_debug.message('x09: %s',apex_application.g_x09);
+            --apex_debug.message('x10: %s',apex_application.g_x10);
+            apex_debug.message('f01: %s',apex_util.table_to_string(apex_application.g_f01));
+            apex_debug.message('---------------');
+            apex_debug.message('EOF Parameters');
+            apex_debug.message('---------------');
+        end if;
+    end log_ajax_parameters;
+
 begin
 
     --debugging
@@ -231,6 +263,7 @@ begin
           ( p_plugin         => p_plugin
           , p_dynamic_action => p_dynamic_action
           );
+        log_ajax_parameters;
     end if;
 
     apex_application.g_x01 := c_bug_workaround_name;
@@ -300,6 +333,7 @@ begin
           );
 
         apex_exec.close(l_context);
+        commit; -- needed now in APEX 21.1
     end if;
 
     -- apply workaround for apex bug
