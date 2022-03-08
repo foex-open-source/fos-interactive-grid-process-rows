@@ -17,6 +17,7 @@ as
 c_plugin_name            constant varchar2(100) := 'FOS - Interactive Grid - Process Rows';
 c_pk_collection_name     constant varchar2(100) := 'FOS_IG_PK';
 c_bug_workaround_name    constant varchar2(100) := 'FOS_APEX_192_BUG_30665079_WORKAROUND';
+c_apex_192_identifier    constant number        := 20191004;
 
 function render
     ( p_dynamic_action apex_plugin.t_dynamic_action
@@ -28,17 +29,18 @@ as
 
     l_mode                     p_dynamic_action.attribute_01%type := p_dynamic_action.attribute_01;
     l_items_to_submit          apex_t_varchar2                    := apex_string.split(p_dynamic_action.attribute_03, ',');
-    l_refresh_selection        boolean                            := instr(p_dynamic_action.attribute_15, 'refresh-selection')    > 0;
-    l_refresh_grid             boolean                            := instr(p_dynamic_action.attribute_15, 'refresh-grid')         > 0;
-    l_replace_on_client        boolean                            := instr(p_dynamic_action.attribute_15, 'client-substitutions') > 0;
-    l_escape_message           boolean                            := instr(p_dynamic_action.attribute_15, 'escape-message')       > 0;
+    l_refresh_selection        boolean                            := instr(p_dynamic_action.attribute_15, 'refresh-selection')              > 0;
+    l_refresh_grid             boolean                            := instr(p_dynamic_action.attribute_15, 'refresh-grid')                   > 0;
+    l_replace_on_client        boolean                            := instr(p_dynamic_action.attribute_15, 'client-substitutions')           > 0;
+    l_escape_message           boolean                            := instr(p_dynamic_action.attribute_15, 'escape-message')                 > 0;
+    l_remove_selection         boolean                            := instr(p_dynamic_action.attribute_15, 'remove-selection-after-process') > 0;
 
     l_ajax_identifier          varchar2(1000)                     := apex_plugin.get_ajax_identifier;
     l_init_js_fn               varchar2(32767)                    := nvl(apex_plugin_util.replace_substitutions(p_dynamic_action.init_javascript_code), 'undefined');
 begin
 
     -- debugging
-    if apex_application.g_debug
+    if apex_application.g_debug and substr(:DEBUG,6) >= 6
     then
         apex_plugin_util.debug_dynamic_action
           ( p_plugin         => p_plugin
@@ -88,6 +90,7 @@ begin
     apex_json.write('refreshGrid'         , l_refresh_grid);
     apex_json.write('performSubstitutions', l_replace_on_client);
     apex_json.write('escapeMessage'       , l_escape_message);
+    apex_json.write('removeSelection'     , l_remove_selection);
 
     apex_json.close_object;
 
@@ -132,7 +135,6 @@ begin
                         ( p_values => l_values
                         , p_path   => 'recordKeys'
                         );
-
     -- for each primary key object. can contain multiple primary key columns
     for i in 1 .. l_record_count
     loop
@@ -208,6 +210,12 @@ as
 
     l_error_occurred    boolean                            := false;
 
+    l_plsql             varchar2(32000);
+
+    l_preference_data   varchar2(32000);
+    l_report_id         varchar2(32000);
+    l_report_type       varchar2(32000);
+
     l_return apex_plugin.t_dynamic_action_ajax_result;
 
     --
@@ -257,7 +265,7 @@ as
 begin
 
     --debugging
-    if apex_application.g_debug
+    if apex_application.g_debug and substr(:DEBUG,6) >= 6
     then
         apex_plugin_util.debug_dynamic_action
           ( p_plugin         => p_plugin
@@ -268,15 +276,46 @@ begin
 
     apex_application.g_x01 := c_bug_workaround_name;
 
+    -- get the report id
+    -- in 19.2 we cannot use the apex_ig.get_last_viewed_report_id
+    -- so we have to read it directly from a preference
+    if wwv_flow_api.c_current = c_apex_192_identifier
+    then
+        l_preference_data := apex_util.get_preference
+            ( p_preference => 'APEX_IG_' || l_affected_region_id || '_CURRENT_REPORT'
+            );
+
+        if l_preference_data is not null
+        then
+            l_report_id   := substr( l_preference_data, 1, instr( l_preference_data, ':' ) - 1);
+            l_report_type := substr( l_preference_data, instr( l_preference_data, ':' ) + 1);
+        end if;
+
+    else
+        -- we must use execute immediate in order to avoid compilation issues in 19.2
+        l_plsql := q'#
+            declare
+                l_report_id number;
+            begin
+                l_report_id := apex_ig.get_last_viewed_report_id
+                    ( p_page_id     => :b1
+                    , p_region_id   => :b2
+                    );
+                 :b3 := l_report_id;
+            end;
+        #';
+        execute immediate l_plsql using in V('APP_PAGE_ID'), l_affected_region_id, out l_report_id;
+    end if;
+
     -- when in selection mode, we must first compute the context filter, based on the records selected
     if l_is_selection_mode
     then
-
         -- only opening the context to get the column and primary key information
         l_context := apex_region.open_query_context
-                       ( p_page_id     => V('APP_PAGE_ID')
-                       , p_region_id   => l_affected_region_id
-                       , p_max_rows    => 0
+                       ( p_page_id      => V('APP_PAGE_ID')
+                       , p_region_id    => l_affected_region_id
+                       , p_max_rows     => 0
+                       , p_component_id => l_report_id
                        );
 
         --rebuilding the primary key json
@@ -334,6 +373,7 @@ begin
 
         apex_exec.close(l_context);
         commit; -- needed now in APEX 21.1
+
     end if;
 
     -- apply workaround for apex bug
@@ -344,6 +384,7 @@ begin
                    ( p_page_id             => V('APP_PAGE_ID')
                    , p_region_id           => l_affected_region_id
                    , p_additional_filters  => l_filters
+                   , p_component_id        => l_report_id
                    );
 
     -- resetting g_x01 to its original value as open_query_context is done parsing the columns

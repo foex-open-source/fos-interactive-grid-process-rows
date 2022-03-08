@@ -23,6 +23,8 @@ FOS.interactiveGrid.processRows = function (daContext, config, initFn) {
     var fostrOptions = {};
     apex.debug.info(pluginName, config);
 
+    console.log('config', config);
+
     fostrOptions = {
         dismiss: ['onClick', 'onButton'],
         dismissAfter: null,
@@ -135,6 +137,19 @@ FOS.interactiveGrid.processRows = function (daContext, config, initFn) {
             // refresh entire grid if option is set
             if (config.refreshGrid) {
                 region.refresh();
+
+                // if remove selection is enabled, we must wait until the grid is loaded
+                // and remove the selection after that
+                if(config.removeSelection){
+                    $('#'+regionId).one('interactivegridselectionchange', (e)=>{
+                        region.call('setSelectedRecords', '');
+                    })
+                }
+            }
+
+            // remove selection
+            if(config.removeSelection && !config.refreshGrid){
+                region.call('setSelectedRecords', '');
             }
 
             // show notification message

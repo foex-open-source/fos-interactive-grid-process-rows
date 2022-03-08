@@ -1,6 +1,6 @@
 {
     "name":"FOS - Interactive Grid - Process Rows"
-   ,"version":"21.1.0"
+   ,"version":"21.2.0"
    ,"description":"Process the selected or filtered Interactive Grid rows declaratively.\r\n\u003Ch4\u003EFree Plug-in under MIT License\u003C\/h4\u003E\r\n\u003Cp\u003E\r\nAll FOS plug-ins are released under MIT License, which essentially means it is free for everyone to use, no matter if commercial or private use. \r\n\u003C\/p\u003E\r\n\u003Ch4\u003EOverview\u003C\/h4\u003E\r\n\u003Cp\u003E\r\n    The \u003Cstrong\u003EFOS - Interactive Grid - Process Rows\u003C\/strong\u003E plug-in is used for bulk-processing rows of an interactive grid. It is a dynamic action that runs PL\/SQL code on either only the selected rows or all filtered rows.\r\n\u003C\/p\u003E\r\n\u003Cp\u003E\r\n    You can pass page-items in and out of the PL\/SQL code, display success and error messages, programmatically control success and error message content and behaviour, declaratively refresh the selected rows or the whole grid after completion, and it also takes care of message substitutions and escaping.\r\n\u003C\/p\u003E"
    ,"keywords":[
         "interactive grid"
@@ -33,12 +33,15 @@
            ,"12.2.0.1"
            ,"18.0.0.0"
            ,"19.0.0.0"
+           ,"21.0.0.0"
         ]
        ,"apex":{
             "versions":[
                 "19.2.0"
                ,"20.1.0"
                ,"20.2.0"
+               ,"21.1.0"
+               ,"21.2.0"
             ]
            ,"plugin":{
                 "internalName":"COM.FOS.INTERACTIVE_GRID_PROCESS_ROWS"
