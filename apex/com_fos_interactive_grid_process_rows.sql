@@ -589,7 +589,7 @@ wwv_flow_api.create_plugin(
 '    You can pass page-items in and out of the PL/SQL code, display success and error messages, programmatically control success and error message content and behaviour, declaratively refresh the selected rows or the whole grid after completion, and i'
 ||'t also takes care of message substitutions and escaping.',
 '</p>'))
-,p_version_identifier=>'21.2.0'
+,p_version_identifier=>'22.1.0'
 ,p_about_url=>'https://fos.world'
 ,p_plugin_comment=>wwv_flow_string.join(wwv_flow_t_varchar2(
 '// Settings for the FOS browser extension',
